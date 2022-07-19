@@ -1,27 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:musica_app/screens/favorite_page/provider/provider.dart';
 import 'package:musica_app/screens/loby_page/home_main.dart';
+import 'package:musica_app/screens/theme/theme.dart';
 import 'package:provider/provider.dart';
 
-class GetSplash extends StatefulWidget {
-  const GetSplash({ Key? key }) : super(key: key);
-  
-  @override
-  State<GetSplash> createState() => _GetSplashState();
-}
+class SplashScreen extends StatelessWidget {
+  const SplashScreen({Key? key}) : super(key: key);
 
-class _GetSplashState extends State<GetSplash> {
   @override
-  void initState() {
-    gotohome(context);
-    super.initState();
-  }
-  @override
+
   Widget build(BuildContext context) {
-    final favprovider = Provider.of<Favsong>(context,listen: false); 
-  favprovider.gettheme(); 
+     gotohome(context);
+    final themechange = Provider.of<Themeset>(context,listen: false); 
+  themechange.gettheme(); 
     return Scaffold(
-      
       body: 
       Container(
          decoration: const BoxDecoration(
@@ -55,10 +46,11 @@ class _GetSplashState extends State<GetSplash> {
       ),
     );
   }
-}
-Future  gotohome(BuildContext context)async{
+  Future  gotohome(BuildContext context)async{
  await Future.delayed(const Duration(seconds: 3)) ;
  return {
   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx)=> const HomeScreen()))
  };
 } 
+}
+

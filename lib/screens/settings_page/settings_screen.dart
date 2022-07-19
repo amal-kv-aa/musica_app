@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:musica_app/screens/favorite_page/provider/provider.dart';
 import 'package:musica_app/screens/playlist_page/provider/playlist_provider.dart';
+import 'package:musica_app/screens/settings_page/alert_dialog/alert.dart';
 import 'package:musica_app/screens/splash_page/splash_screen.dart';
+import 'package:musica_app/screens/theme/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsScreen extends StatelessWidget {
-  SettingsScreen({Key? key}) : super(key: key);
+  const SettingsScreen({Key? key}) : super(key: key);
 
   static var selectedthem = 0;
 
   @override
   Widget build(BuildContext context) {
-     final playprovider = Provider.of<PlayListProvider>(context,listen: false);
-     final favprovider = Provider.of<Favsong>(context,listen: false);
+    final playprovider = Provider.of<PlayListProvider>(context, listen: false);
+    final themechange = Provider.of<Themeset>(context, listen: false);
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
@@ -92,11 +93,11 @@ class SettingsScreen extends StatelessWidget {
                                     )),
                                 TextButton(
                                     onPressed: () {
-                                      playprovider.resetapp();
+                                      context.read<Themeset>().resetapp();
                                       Navigator.of(context).pushAndRemoveUntil(
                                           MaterialPageRoute(
                                               builder: (ctx) =>
-                                                  const GetSplash()),
+                                                  const SplashScreen()),
                                           (route) => false);
                                     },
                                     child: const Text('Ok',
@@ -143,68 +144,16 @@ class SettingsScreen extends StatelessWidget {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.02,
               ),
-                Center(
-                  child:ElevatedButton(onPressed: (){
-                     showDialog(
-                      context: context,
-                      builder: (ctx) {
-                        return AlertDialog(
-                          backgroundColor:
-                              const Color.fromARGB(255, 49, 49, 49),
-                          title: const Text(
-                            'select your theme ',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 20, 211, 221)),
-                          ),
-                          actions: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                ElevatedButton(
-                                    onPressed: () {
-                                      favprovider.checktheme(0);
-                                      Navigator.of(context).pushAndRemoveUntil(
-                                          MaterialPageRoute(
-                                              builder: (ctx) =>
-                                                  const GetSplash()),
-                                          (route) => false);
-                                    },
-                                    child: const Text(
-                                      'Default',
-                                      style: TextStyle(
-                                          color: Color.fromARGB(255, 255, 255, 255)),
-                                    )),
-                                ElevatedButton(
-                                    onPressed: () {
-                                      favprovider.checktheme(1);
-                                      Navigator.of(context).pushAndRemoveUntil(
-                                          MaterialPageRoute(
-                                              builder: (ctx) =>
-                                                  const GetSplash()),
-                                          (route) => false);
-                                    },
-                                    child: const Text('Dark',
-                                        style: TextStyle(
-                                            color: Color.fromARGB(255, 255, 255, 255)))),
-                                ElevatedButton(
-                                    onPressed: () {
-                                      favprovider.checktheme(2);
-                                      Navigator.of(context).pushAndRemoveUntil(
-                                          MaterialPageRoute(
-                                              builder: (ctx) =>
-                                                  const GetSplash()),
-                                          (route) => false);
-                                    },
-                                    child: const Text('Gradient',
-                                        style: TextStyle(
-                                            color: Color.fromARGB(255, 255, 255, 255)))),
-                              ],
-                            )
-                          ],
-                        );
-                      });
-                  }, child:const Text("Change App Theme",style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),))
-                ),
+              Center(
+                  child: ElevatedButton(
+                      onPressed: () {
+                        AlertSettings.alertShow(context);
+                      },
+                      child: const Text(
+                        "Change App Theme",
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 255, 255, 255)),
+                      ))),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.05,
               ),
@@ -220,8 +169,7 @@ class SettingsScreen extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: () {
-                      launchUrl(Uri.parse(
-                          'https://github.com/amal-kv-aa'));
+                      launchUrl(Uri.parse('https://github.com/amal-kv-aa'));
                     },
                     child: SizedBox(
                         height: MediaQuery.of(context).size.height * 0.05,

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:musica_app/auto_playing_list/set_source.dart';
 import 'package:musica_app/screens/favorite_page/provider/provider.dart';
 import 'package:musica_app/screens/nowplaying_page/now_playing.dart';
+import 'package:musica_app/screens/nowplaying_page/provider/nowplayer_provider.dart';
+import 'package:musica_app/screens/theme/theme.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:provider/provider.dart';
 
@@ -11,17 +13,16 @@ class FavoritePage extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final favprovider = context.watch<Favsong>();
-    favprovider.showsongs();
+    final themechange = context.watch<Themeset>();
     return Container(
-      decoration: favprovider.themvalue == 0
+      decoration: themechange.themvalue == 0
           ? const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage('assets/images/music.jpg'),
                   fit: BoxFit.cover))
           : BoxDecoration(
               gradient:
-                  favprovider.themvalue == 1 || favprovider.themvalue == null
+                  themechange.themvalue == 1 || themechange.themvalue == null
                       ? const LinearGradient(
                           begin: Alignment.bottomLeft,
                           end: Alignment.topLeft,
@@ -40,7 +41,7 @@ class FavoritePage extends StatelessWidget {
           padding: EdgeInsets.only(
               top: MediaQuery.of(context).size.height * 0.15,
               bottom: MediaQuery.of(context).size.height * 0.1),
-          child: Consumer<Favsong>(
+          child: Consumer<Favbutton>(
             builder: (context, songList, _) {
               return ListView.builder(
                 itemCount: songList.favsong.length,
@@ -59,13 +60,13 @@ class FavoritePage extends StatelessWidget {
                         selectedTileColor:
                             const Color.fromARGB(255, 226, 222, 222),
                         onTap: () {
-                          NowPlaying.player.setAudioSource(
+                          context.read<NowplayProvider>().player.setAudioSource(
                             SetSource.createPLaylist(songList.favsong),
                             initialIndex: index,
                           );
-                          NowPlaying.player.play();
+                          context.read<NowplayProvider>().player.play();
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (ctx) => NowPlaying(
+                              builder: (ctx) => Nowplaying(
                                     songs: songList.favsong,
                                   )));
                         },
@@ -85,7 +86,7 @@ class FavoritePage extends StatelessWidget {
                         ),
                         trailing: IconButton(
                           icon: const Icon(Icons.favorite),
-                          color: favprovider.themvalue != 2
+                          color: themechange.themvalue != 2
                               ? const Color.fromARGB(255, 0, 255, 217)
                               : Colors.pink,
                           onPressed: () {
@@ -93,7 +94,7 @@ class FavoritePage extends StatelessWidget {
                                 context: context,
                                 builder: (ctx) {
                                   return AlertDialog(
-                                    backgroundColor: favprovider.themvalue != 2
+                                    backgroundColor: themechange.themvalue != 2
                                         ? const Color.fromARGB(255, 49, 49, 49)
                                         : const Color.fromARGB(255, 48, 7, 20),
                                     title: const Text(
@@ -122,7 +123,7 @@ class FavoritePage extends StatelessWidget {
                                               )),
                                           TextButton(
                                               onPressed: () {
-                                                favprovider.removeList(index);
+                                                context.read<Favbutton>().removeList(index);
                                                 Navigator.pop(context);
                                               },
                                               child: const Text('Ok',

@@ -2,10 +2,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:musica_app/data_model/data_model.dart';
-import 'package:musica_app/screens/favorite_page/provider/provider.dart';
-import 'package:musica_app/screens/playlist_page/button_playlist/add_button.dart';
 import 'package:musica_app/screens/playlist_page/playlist_folder.dart';
 import 'package:musica_app/screens/playlist_page/provider/playlist_provider.dart';
+import 'package:musica_app/screens/playlist_page/widgets/alert/show_alert.dart';
+import 'package:musica_app/screens/playlist_page/widgets/button_playlist/add_button.dart';
+import 'package:musica_app/screens/theme/theme.dart';
 import 'package:provider/provider.dart';
 
 
@@ -16,17 +17,19 @@ class PlayList extends StatelessWidget {
    int? addplaylist ;
   @override
   Widget build(BuildContext context) {
+     
       final playprovider = Provider.of<PlayListProvider>(context,listen: false);
-    final favprovider = Provider.of<Favsong>(context,listen: false);
+    final themechange = Provider.of<Themeset>(context,listen: false);
+    // playprovider.getplayList();
     return Scaffold(
       body: Container(
-        decoration: favprovider.themvalue == 0  ? const BoxDecoration(
+        decoration: themechange.themvalue == 0  ? const BoxDecoration(
           image: DecorationImage(
               image: AssetImage(
                 'assets/images/music.jpg',
               ),
               fit: BoxFit.cover),
-        ):   BoxDecoration( gradient:favprovider.themvalue==1 || favprovider.themvalue==null ?  const LinearGradient( begin: Alignment.bottomLeft,
+        ):   BoxDecoration( gradient:themechange.themvalue==1 || themechange.themvalue==null ?  const LinearGradient( begin: Alignment.bottomLeft,
               end: Alignment.topLeft,colors:  [
                 Color.fromARGB(255, 0, 0, 0),
 
@@ -54,7 +57,7 @@ class PlayList extends StatelessWidget {
                           context: context,
                           builder: (ctx) {
                             return AlertDialog(
-                              backgroundColor:favprovider.themvalue!=2 ?
+                              backgroundColor:themechange.themvalue!=2 ?
                                     const    Color.fromARGB(255, 49, 49, 49) :const  Color.fromARGB(57, 135, 91, 100),
                               content: TextField(
                                   style:const TextStyle(color: Colors.white),
@@ -145,7 +148,7 @@ class PlayList extends StatelessWidget {
                                     context: context,
                                     builder: (ctx) {
                                       return AlertDialog(
-                                        backgroundColor:favprovider.themvalue !=2 ?const Color.fromARGB(255, 56, 56, 56):  const Color.fromARGB(57, 135, 91, 100),
+                                        backgroundColor:themechange.themvalue !=2 ?const Color.fromARGB(255, 56, 56, 56):  const Color.fromARGB(57, 135, 91, 100),
                                         actions: [
                                           TextButton(
                                               onPressed: () async {
@@ -168,60 +171,7 @@ class PlayList extends StatelessWidget {
                                               const    Text('Change Background Image' ,style: TextStyle(color: Color.fromARGB(255, 36, 226, 207)),)),
                                           IconButton(
                                               onPressed: () {
-                                                showDialog(
-                                                    context: context,
-                                                    builder: (ctx) {
-                                                      return AlertDialog(
-                                                        backgroundColor:favprovider.themvalue!=2 ?
-                                                          const Color.fromARGB(255, 44, 44, 44) :const Color.fromARGB(255, 80, 39, 52),
-                                                        title: Text(
-                                                          'Delete folder ${playprovider.playlistsong[index].name}?',
-                                                          style: const TextStyle(
-                                                              color: Color.fromARGB(255, 62, 221, 239)),
-                                                        ),
-                                                        actions: [
-                                                          Row(
-                                                            children: [
-                                                              TextButton(
-                                                                  onPressed:
-                                                                      () {
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                  },
-                                                                  child:
-                                                                      const Text(
-                                                                    'cancel',
-                                                                    style: TextStyle(
-                                                                        color: Color.fromARGB(
-                                                                            255,
-                                                                            33,
-                                                                            222,
-                                                                            243)),
-                                                                  )),
-                                                              TextButton(
-                                                                  onPressed:
-                                                                      () {
-                                                                    playprovider
-                                                                        .deleteplaylist(
-                                                                            index);
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                        Navigator.pop(
-                                                                        context);
-                                                                  },
-                                                                  child: const Text(
-                                                                      'Ok',
-                                                                      style: TextStyle(
-                                                                          color: Color.fromARGB(
-                                                                              255,
-                                                                              33,
-                                                                              222,
-                                                                              243))))
-                                                            ],
-                                                          )
-                                                        ],
-                                                      );
-                                                    });
+                                               ShowAlert.alert(context,index);
                                               },
                                               icon:const Icon(
                                                 Icons.delete,

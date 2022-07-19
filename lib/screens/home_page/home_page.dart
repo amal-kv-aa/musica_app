@@ -1,36 +1,19 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:musica_app/auto_playing_list/set_source.dart';
 import 'package:musica_app/screens/favorite_page/favoritebutton/favbutton.dart';
-import 'package:musica_app/screens/favorite_page/provider/provider.dart';
-import 'package:musica_app/screens/nowplaying_page/now_playing.dart';
+import 'package:musica_app/screens/home_page/provider/home_provider.dart';
+import 'package:musica_app/screens/theme/theme.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
   static List<SongModel> songs = [];
   @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  //===========define an audio plugin===========//
-  final OnAudioQuery _audioQuery = OnAudioQuery();
-  bool addfavorite = false;
-
-  @override
-  initState() {
-    super.initState();
-    requeStoragePermission();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final favprovider = context.watch<Favsong>();
-    // favprovider.showsongs();
+   context.read<HomeProvider>().requeStoragePermission();
+    final themechange = context.watch<Themeset>();
     return Container(
-      decoration: favprovider.themvalue == 0
+      decoration: themechange.themvalue == 0
           ? const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage(
@@ -39,7 +22,7 @@ class _HomePageState extends State<HomePage> {
                   fit: BoxFit.cover))
           : BoxDecoration(
               gradient:
-                  favprovider.themvalue == 1 || favprovider.themvalue == null
+                  themechange.themvalue == 1 || themechange.themvalue == null
                       ? const LinearGradient(
                           begin: Alignment.bottomLeft,
                           end: Alignment.topLeft,
@@ -56,7 +39,7 @@ class _HomePageState extends State<HomePage> {
                             ])),
       child: ListView(children: [
         FutureBuilder<List<SongModel>>(
-            future: _audioQuery.querySongs(
+            future: context.read<HomeProvider>().audioQuery.querySongs(
                 sortType: SongSortType.ARTIST,
                 orderType: OrderType.ASC_OR_SMALLER,
                 uriType: UriType.EXTERNAL,
@@ -74,6 +57,7 @@ class _HomePageState extends State<HomePage> {
               }
               HomePage.songs.clear();
               HomePage.songs = item.data!;
+
               return Column(
                 children: [
                   SizedBox(
@@ -98,17 +82,9 @@ class _HomePageState extends State<HomePage> {
                               width: MediaQuery.of(context).size.width * 0.1,
                               child: InkWell(
                                 onTap: () {
-                                  NowPlaying.player.setAudioSource(
-                                    SetSource.createPLaylist(HomePage.songs),
-                                    initialIndex: index,
-                                  );
-                                  NowPlaying.player.play();
-                                  Navigator.of(context)
-                                      .push(MaterialPageRoute(builder: (ctx) {
-                                    return NowPlaying(
-                                      songs: HomePage.songs,
-                                    );
-                                  }));
+                                  context
+                                      .read<HomeProvider>()
+                                      .gotoNowplay(context, index);
                                 },
                                 child: Card(
                                   color: Colors.transparent,
@@ -129,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                                                   .height *
                                               0.15,
                                           child: QueryArtworkWidget(
-                                            id: item.data![index].id,
+                                            id: HomePage.songs[index].id,
                                             artworkFit: BoxFit.cover,
                                             artworkBorder:
                                                 BorderRadius.circular(0),
@@ -149,23 +125,21 @@ class _HomePageState extends State<HomePage> {
                                           color: Colors.white24,
                                         ),
                                         child: ListTile(
-                                            title: Text(
-                                              item.data![index].title
-                                                  .replaceAll(RegExp('_'), '')
-                                                  .replaceAll(RegExp('-'), ''),
-                                              style: const TextStyle(
-                                                  color: Color.fromARGB(
-                                                      255, 255, 255, 255),
-                                                  fontSize: 14,
-                                                  overflow:
-                                                      TextOverflow.ellipsis),
-                                            ),
-                                            trailing:
-                                                FavButton(
-                                                    id: HomePage.songs[index].id),
-                                              
-                                            ),
-                                      ),
+                                          title: Text(
+                                            HomePage.songs[index].title
+                                                .replaceAll(RegExp('_'), '')
+                                                .replaceAll(RegExp('-'), ''),
+                                            style: const TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 255, 255, 255),
+                                                fontSize: 14,
+                                                overflow:
+                                                    TextOverflow.ellipsis),
+                                          ),
+                                          trailing: ButtonFav(
+                                              id: HomePage.songs[index].id),
+                                        ),
+                                      )
                                     ],
                                   ),
                                 ),
@@ -179,15 +153,5 @@ class _HomePageState extends State<HomePage> {
             }),
       ]),
     );
-  }
-
-  void requeStoragePermission() async {
-    if (!kIsWeb) {
-      bool permissionStatus = await _audioQuery.permissionsStatus();
-      if (!permissionStatus) {
-        await _audioQuery.permissionsRequest();
-      }
-      setState(() {});
-    }
   }
 }
