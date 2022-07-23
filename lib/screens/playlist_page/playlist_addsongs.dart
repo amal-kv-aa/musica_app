@@ -5,6 +5,7 @@ import 'package:musica_app/screens/theme/theme.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:provider/provider.dart';
 
+
 class PlaylistAdd extends StatelessWidget {
   PlaylistAdd({Key? key, this.newindex}) : super(key: key);
   dynamic newindex;

@@ -5,12 +5,15 @@ import 'package:on_audio_query/on_audio_query.dart';
 import 'package:rxdart/rxdart.dart';
 
 class NowplayProvider with ChangeNotifier {
+  NowplayProvider() {
+    listenstream();
+  }
   int currentIndex = 0;
 
   List<SongModel> itemlist = [];
 
   final AudioPlayer player = AudioPlayer();
-
+//=========================uodate playing song index===============//
   _updateCurrentPlayingSongDetailes(index) {
     if (player.currentIndex != null) {
       currentIndex = index;
@@ -30,14 +33,12 @@ class NowplayProvider with ChangeNotifier {
 
   updatesonglist(List<SongModel> songs) {
     itemlist.clear();
-    for (var i = 0; i < songs.length; i++) {
-    itemlist.add(songs[i]);
-    }
+    itemlist.addAll(songs);
   }
 
   //====================update currend index======================//
 
-  listenstream(){
+  listenstream() {
     player.currentIndexStream.listen((index) {
       if (index != null) {
         _updateCurrentPlayingSongDetailes(index);
@@ -73,6 +74,7 @@ class NowplayProvider with ChangeNotifier {
     if (player.hasNext) {
       player.seekToNext();
       player.play();
+      //notifyListeners();
     }
   }
 

@@ -5,7 +5,7 @@ import 'package:just_audio_background/just_audio_background.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 class SetSource extends StatelessWidget {
-   SetSource({ Key? key, }) : super(key: key);
+  const SetSource({ Key? key, }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

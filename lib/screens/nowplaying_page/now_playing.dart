@@ -2,7 +2,7 @@ import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:marquee/marquee.dart';
-import 'package:musica_app/screens/favorite_page/favoritebutton/favbutton.dart';
+import 'package:musica_app/screens/favorite_page/widget/favoritebutton/favbutton.dart';
 import 'package:musica_app/screens/nowplaying_page/bottomsheet/bottomsheet.dart';
 import 'package:musica_app/screens/nowplaying_page/provider/nowplayer_provider.dart';
 import 'package:musica_app/screens/theme/theme.dart';
@@ -17,9 +17,9 @@ class Nowplaying extends StatelessWidget {
     final read = context.read<NowplayProvider>();
     final watch = context.watch<NowplayProvider>();
     read.updatesonglist(songs!);
-    read.listenstream();
     final themechange = Provider.of<Themeset>(context);
     final id = songs![watch.currentIndex].id;
+
     return Scaffold(
       body: Container(
         decoration: themechange.themvalue == 0
@@ -75,39 +75,35 @@ class Nowplaying extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20),
                 child: Container(
-                  height: MediaQuery.of(context).size.height * 0.3,
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                          width: 2,
-                          color: themechange.themvalue != 2
-                              ? const Color.fromARGB(255, 7, 253, 241)
-                              : const Color.fromARGB(255, 0, 201, 251)),
-                      boxShadow: [
-                        BoxShadow(
-                            blurRadius: 16,
+                    height: MediaQuery.of(context).size.height * 0.3,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            width: 2,
                             color: themechange.themvalue != 2
-                                ? const Color.fromARGB(255, 108, 235, 244)
-                                : const Color.fromARGB(255, 12, 93, 117),
-                            offset: const Offset(0, 0))
-                      ],
-                      color: const Color.fromARGB(255, 252, 255, 255)
-                          .withOpacity(0),
-                      borderRadius: BorderRadius.circular(50)),
-                  child:  Consumer<NowplayProvider>(
-                    builder: (context, value, child) {
-                      return
-                      QueryArtworkWidget(
-                            id: value.itemlist[value.player.currentIndex!].id ,
-                            type: ArtworkType.AUDIO,
-                            artworkBorder: BorderRadius.circular(50),
-                            artworkFit: BoxFit.cover,
-                            artworkQuality: FilterQuality.high,
-                            );
-                    },
-                     
-                  ),
-                    
-                ),
+                                ? const Color.fromARGB(255, 7, 253, 241)
+                                : const Color.fromARGB(255, 0, 201, 251)),
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 16,
+                              color: themechange.themvalue != 2
+                                  ? const Color.fromARGB(255, 108, 235, 244)
+                                  : const Color.fromARGB(255, 12, 93, 117),
+                              offset: const Offset(0, 0))
+                        ],
+                        color: const Color.fromARGB(255, 252, 255, 255)
+                            .withOpacity(0),
+                        borderRadius: BorderRadius.circular(50)),
+                    child: Consumer<NowplayProvider>(
+                      builder: (context, value, _) {
+                        return QueryArtworkWidget(
+                          id: songs![value.currentIndex].id,
+                          type: ArtworkType.AUDIO,
+                          artworkBorder: BorderRadius.circular(50),
+                          artworkFit: BoxFit.cover,
+                          artworkQuality: FilterQuality.high,
+                        );
+                      },
+                    )),
               ),
             ),
             Padding(
@@ -246,7 +242,10 @@ class Nowplaying extends StatelessWidget {
                 children: [
                   IconButton(
                       onPressed: () {
-                        BottomSheets.showmodel(context, id);
+                        BottomSheets.showmodel(
+                          context,
+                          id,
+                        );
                       },
                       icon: const Icon(
                         Icons.playlist_add,

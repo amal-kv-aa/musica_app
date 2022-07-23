@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:musica_app/screens/playlist_page/provider/playlist_provider.dart';
 import 'package:musica_app/screens/settings_page/alert_dialog/alert.dart';
-import 'package:musica_app/screens/splash_page/splash_screen.dart';
 import 'package:musica_app/screens/theme/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -13,8 +11,7 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final playprovider = Provider.of<PlayListProvider>(context, listen: false);
-    final themechange = Provider.of<Themeset>(context, listen: false);
+    
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
@@ -93,12 +90,8 @@ class SettingsScreen extends StatelessWidget {
                                     )),
                                 TextButton(
                                     onPressed: () {
-                                      context.read<Themeset>().resetapp();
-                                      Navigator.of(context).pushAndRemoveUntil(
-                                          MaterialPageRoute(
-                                              builder: (ctx) =>
-                                                  const SplashScreen()),
-                                          (route) => false);
+                                      context.read<Themeset>().resetapp(context);
+                                     
                                     },
                                     child: const Text('Ok',
                                         style: TextStyle(

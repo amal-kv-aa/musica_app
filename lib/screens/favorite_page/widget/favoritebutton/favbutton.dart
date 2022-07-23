@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:musica_app/screens/favorite_page/provider/provider.dart';
-import 'package:musica_app/screens/home_page/home_page.dart';
 import 'package:musica_app/screens/theme/theme.dart';
 import 'package:provider/provider.dart';
 
 class ButtonFav extends StatelessWidget {
-   ButtonFav({Key? key,required this.id}) : super(key: key);
-  int id;
+  const ButtonFav({Key? key,required this.id}) : super(key: key);
+ final int id;
   @override
   Widget build(BuildContext context) {
     final themechange = context.watch<Themeset>();

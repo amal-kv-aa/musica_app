@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:musica_app/screens/favorite_page/favoritebutton/favbutton.dart';
+import 'package:musica_app/screens/favorite_page/widget/favoritebutton/favbutton.dart';
 import 'package:musica_app/screens/home_page/provider/home_provider.dart';
 import 'package:musica_app/screens/theme/theme.dart';
 import 'package:on_audio_query/on_audio_query.dart';
@@ -10,7 +10,7 @@ class HomePage extends StatelessWidget {
   static List<SongModel> songs = [];
   @override
   Widget build(BuildContext context) {
-   context.read<HomeProvider>().requeStoragePermission();
+    context.read<HomeProvider>().requeStoragePermission();
     final themechange = context.watch<Themeset>();
     return Container(
       decoration: themechange.themvalue == 0
@@ -44,19 +44,19 @@ class HomePage extends StatelessWidget {
                 orderType: OrderType.ASC_OR_SMALLER,
                 uriType: UriType.EXTERNAL,
                 ignoreCase: true),
-            builder: (context, item) {
+            builder: (context, snapshot) {
               //== loading content indicator==//
-              if (item.data == null) {
+              if (snapshot.data == null) {
                 return const Center(child: Text('Loading songs......'));
               }
               //======no song found =========//
-              if (item.data!.isEmpty) {
+              if (snapshot.data!.isEmpty) {
                 return const Center(
                   child: Text('No songs founds.......'),
                 );
               }
               HomePage.songs.clear();
-              HomePage.songs = item.data!;
+              HomePage.songs = snapshot.data!;
 
               return Column(
                 children: [
@@ -73,7 +73,7 @@ class HomePage extends StatelessWidget {
                         reverse: false,
                         shrinkWrap: true,
                         primary: false,
-                        itemCount: item.data!.length,
+                        itemCount: snapshot.data!.length,
                         itemBuilder: (BuildContext ctx, int index) {
                           return Padding(
                             padding: const EdgeInsets.all(8.0),

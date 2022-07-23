@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:musica_app/auto_playing_list/set_source.dart';
+import 'package:musica_app/common_widgets/auto_playing_list/set_source.dart';
 import 'package:musica_app/screens/favorite_page/provider/provider.dart';
 import 'package:musica_app/screens/nowplaying_page/now_playing.dart';
 import 'package:musica_app/screens/nowplaying_page/provider/nowplayer_provider.dart';
@@ -90,7 +90,7 @@ class FavoritePage extends StatelessWidget {
                               ? const Color.fromARGB(255, 0, 255, 217)
                               : Colors.pink,
                           onPressed: () {
-                            showDialog(
+                          showDialog(
                                 context: context,
                                 builder: (ctx) {
                                   return AlertDialog(

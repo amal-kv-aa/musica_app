@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:musica_app/auto_playing_list/set_source.dart';
+import 'package:musica_app/common_widgets/auto_playing_list/set_source.dart';
 import 'package:musica_app/screens/nowplaying_page/now_playing.dart';
 import 'package:musica_app/screens/nowplaying_page/provider/nowplayer_provider.dart';
 import 'package:musica_app/screens/search_page/provider/provider_search.dart';

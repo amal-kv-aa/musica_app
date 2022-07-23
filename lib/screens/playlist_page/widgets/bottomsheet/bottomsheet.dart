@@ -55,7 +55,7 @@ class Bottomsheet extends StatelessWidget {
                             dbsonglist: PlaylistButton.dltlist,
                             image:context.watch<PlayListProvider>().playlistsong[newindex!].image);
                         context.read<PlayListProvider>().updatlist(newindex, model);
-                         
+                     
                       },
                       child: const Text('Ok',
                           style: TextStyle(

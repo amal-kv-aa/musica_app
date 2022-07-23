@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musica_app/common_widgets/logo/app_bar_logo.dart';
 import 'package:musica_app/screens/home_page/home_page.dart';
 import 'package:musica_app/screens/loby_page/provider/home_provider.dart';
 import 'package:musica_app/screens/miniplayer/miniplayer.dart';
@@ -8,7 +9,6 @@ import 'package:musica_app/screens/playlist_page/playlist_screen.dart';
 import 'package:musica_app/screens/search_page/search_screen.dart';
 import 'package:musica_app/screens/settings_page/settings_screen.dart';
 import 'package:provider/provider.dart';
-import '../../logo/app_bar_logo.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -73,9 +73,8 @@ class HomeScreen extends StatelessWidget {
               )),
           label: ''),
     ];
-
-
     return Scaffold(
+      
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
 //===========================================appbar===================================================//
         extendBodyBehindAppBar: true,

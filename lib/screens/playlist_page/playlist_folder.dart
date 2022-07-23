@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:musica_app/auto_playing_list/set_source.dart';
+import 'package:musica_app/common_widgets/auto_playing_list/set_source.dart';
 import 'package:musica_app/screens/nowplaying_page/now_playing.dart';
 import 'package:musica_app/screens/nowplaying_page/provider/nowplayer_provider.dart';
 import 'package:musica_app/screens/playlist_page/provider/playlist_provider.dart';
@@ -14,12 +14,10 @@ class PlaylistFolder extends StatelessWidget {
   final int? newindex;
   @override
   Widget build(BuildContext context) {
-   
     final themechange = Provider.of<Themeset>(context, listen: false);
     final read = context.read<PlayListProvider>();
     final watch = context.watch<PlayListProvider>();
     read.showselectsong(newindex);
-     print('.........................************...............................');
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -138,9 +136,8 @@ class PlaylistFolder extends StatelessWidget {
                                                 },
                                                 leading: CircleAvatar(
                                                   child: QueryArtworkWidget(
-                                                    id: value.
-                                                        playsongmodel[
-                                                            index]
+                                                    id: value
+                                                        .playsongmodel[index]
                                                         .id,
                                                     type: ArtworkType.AUDIO,
                                                     artworkBorder:
@@ -149,9 +146,7 @@ class PlaylistFolder extends StatelessWidget {
                                                   ),
                                                 ),
                                                 title: Text(
-                                                  value.playsongmodel[
-                                                    index
-                                                      ]
+                                                  value.playsongmodel[index]
                                                       .title
                                                       .replaceAll(
                                                           RegExp('_'), '')

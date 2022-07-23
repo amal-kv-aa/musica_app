@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:musica_app/screens/nowplaying_page/provider/nowplayer_provider.dart';
-import 'package:musica_app/screens/playlist_page/playlist_screen.dart';
 import 'package:musica_app/screens/playlist_page/provider/playlist_provider.dart';
+import 'package:musica_app/screens/playlist_page/widgets/alert/folderadd/folderadd.dart';
 import 'package:musica_app/screens/playlist_page/widgets/button_playlist/add_button.dart';
 import 'package:provider/provider.dart';
 
@@ -12,7 +11,9 @@ class BottomSheets extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container();
   }
+
   static showmodel(BuildContext context, int id) {
+    TextEditingController namecontroller = TextEditingController();
     showModalBottomSheet(
         context: context,
         builder: (context) {
@@ -27,8 +28,7 @@ class BottomSheets extends StatelessWidget {
                       children: [
                         InkWell(
                           onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (ctx) => PlayList()));
+                            AddAlert.addfolder(context, namecontroller);
                           },
                           child: Container(
                             height: MediaQuery.of(context).size.height * 0.05,
@@ -76,8 +76,7 @@ class BottomSheets extends StatelessWidget {
                                           const TextStyle(color: Colors.white),
                                     ),
                                     trailing: PlaylistButton(
-                                        folderindex: index,
-                                        song: id),
+                                        folderindex: index, song: id),
                                   ),
                                 );
                               })),
@@ -87,6 +86,6 @@ class BottomSheets extends StatelessWidget {
                   );
                 },
               ));
-      });
+        });
   }
 }

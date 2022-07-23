@@ -7,11 +7,12 @@ import 'package:provider/provider.dart';
 class MiniProvider with ChangeNotifier{
 
    List<SongModel> minilist = [];
-  goNowplay(BuildContext context){
+   covertlist(BuildContext context){
      minilist.clear();
-          for (var i = 0; i < context.read<NowplayProvider>().itemlist.length; i++) {
-            minilist.add(context.read<NowplayProvider>().itemlist[i]);
-          }
+      minilist.addAll(context.read<NowplayProvider>().itemlist);
+   }
+  goNowplay(BuildContext context){
+    
           Navigator.of(context).push(MaterialPageRoute(
               builder: (ctx) => Nowplaying(
                     songs: minilist,

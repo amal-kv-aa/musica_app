@@ -8,10 +8,12 @@ import 'package:provider/provider.dart';
 
 class MiniPlayer extends StatelessWidget {
   const MiniPlayer({Key? key}) : super(key: key);
-
+  
   @override
+
   Widget build(BuildContext context) {
     final themechange = context.read< Themeset >();
+    context.read<MiniProvider>().covertlist(context);
     return GestureDetector(
       onHorizontalDragEnd: (dragDownDetails) {
         if ( dragDownDetails.primaryVelocity! < 0 ) {
