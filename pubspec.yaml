@@ -41,7 +41,9 @@ dependencies:
   on_audio_query: ^2.6.1
   provider: ^6.0.3
   rxdart: ^0.27.3
+  palette_generator: ^0.3.3+2
   url_launcher: ^6.1.3
+  we_slide: ^2.3.0
 dev_dependencies:
 
   # The "flutter_lints" package below contains a set of recommended lints to

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:musica_app/data_model/data_model.dart';
-import 'package:musica_app/screens/home_page/home_page.dart';
-import 'package:musica_app/screens/playlist_page/playlist_addsongs.dart';
+import 'package:musica_app/screens/home_page/view/home_page.dart';
+import 'package:musica_app/screens/add_playlist/view/playlist_addsongs.dart';
+import 'package:musica_app/screens/playlist_page/model/data_model/data_model.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 class PlayListProvider with ChangeNotifier {

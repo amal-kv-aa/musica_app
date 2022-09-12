@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:musica_app/screens/home_page/home_page.dart';
+import 'package:musica_app/screens/home_page/view/home_page.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 class SearchProvider with ChangeNotifier {
