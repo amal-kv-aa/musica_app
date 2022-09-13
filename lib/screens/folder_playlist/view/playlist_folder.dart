@@ -143,4 +143,4 @@ class PlaylistFolder extends StatelessWidget {
       ),
     );
   }
-}
+  }

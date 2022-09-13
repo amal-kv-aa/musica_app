@@ -53,7 +53,9 @@ class HomeScreen extends StatelessWidget {
     ];
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+
 //===================================================body=================================================//
+
       extendBody: true,
       body: WeSlide(
           footerHeight: footer,
@@ -78,7 +80,7 @@ class HomeScreen extends StatelessWidget {
           hidePanelHeader: true,
           panel: context.watch<NowplayProvider>().player.playing ||
                   context.watch<NowplayProvider>().player.currentIndex != null
-              ?  Nowplaying(ontap: context.read<LobyProvider>().dismiss())
+              ? Nowplaying(ontap: context.read<LobyProvider>().controller.hide)
               : const SizedBox(),
           panelHeader: context.watch<NowplayProvider>().player.playing ||
                   context.watch<NowplayProvider>().player.currentIndex != null
@@ -89,7 +91,8 @@ class HomeScreen extends StatelessWidget {
             child: ListView(
               physics: const NeverScrollableScrollPhysics(),
               children: [
-                //============miniplayer==condition===========//
+//=========================miniplayer==condition=============================//
+
                 BottomNavigationBar(
                   backgroundColor: Colors.black,
                   elevation: 0,

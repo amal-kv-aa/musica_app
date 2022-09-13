@@ -10,9 +10,8 @@ class HomeProvider with ChangeNotifier {
   Future requeStoragePermission() async {
     if (!kIsWeb) {
       bool permissionStatus = await audioQuery.permissionsStatus();
-      if (permissionStatus == false) {
+      if (!permissionStatus) {
         await audioQuery.permissionsRequest();
-        permissionStatus = await audioQuery.permissionsStatus();
         notifyListeners();
       }
     }

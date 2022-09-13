@@ -14,7 +14,6 @@ class PlayListProvider with ChangeNotifier {
   List<Playlistmodel> playlistsong = [];
 
   //==============play list button ============//
-
   addplaylist({required Playlistmodel model}) async {
     await playlistDB.add(model);
     getplayList();
@@ -30,7 +29,6 @@ class PlayListProvider with ChangeNotifier {
      playlistDB.putAt(index, model);
      getplayList();
      showselectsong(index);
-     notifyListeners();
   }
 
   deleteplaylist(index) async {
@@ -48,7 +46,7 @@ class PlayListProvider with ChangeNotifier {
           break;
         }
       }
-    }
+    }notifyListeners();
   }
   //================================reset app=========================//
 

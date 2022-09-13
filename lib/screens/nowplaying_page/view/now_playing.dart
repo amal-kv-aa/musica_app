@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:marquee/marquee.dart';
 import 'package:musica_app/screens/favorite_page/view/widget/favoritebutton/favbutton.dart';
 import 'package:musica_app/screens/nowplaying_page/provider/nowplayer_provider.dart';
 import 'package:musica_app/screens/nowplaying_page/view/widgets/bottomsheet/bottomsheet.dart';
@@ -21,6 +20,7 @@ class Nowplaying extends StatelessWidget {
   Widget build(BuildContext context) {
     final read = context.read<NowplayProvider>();
     final provider = context.watch<NowplayProvider>();
+    log("entered");
     return 
        Scaffold(
         body: Container(
@@ -52,7 +52,7 @@ class Nowplaying extends StatelessWidget {
                 onHorizontalDragEnd: (dragDownDetails) {
                   provider.gesture(dragDownDetails);
                 },
-                child: Padding(
+               child: Padding(
                   padding: const EdgeInsets.only(left: 20, right: 20),
                   child: Container(
                       height: MediaQuery.of(context).size.height * 0.37,
@@ -62,17 +62,14 @@ class Nowplaying extends StatelessWidget {
                             width: 3,
                           ),
                           borderRadius: BorderRadius.circular(50)),
-                      child: Consumer<NowplayProvider>(
-                        builder: (context, value, _) {
-                          log("1....");
-                          return QueryArtworkWidget(
-                            id: value.itemlist[value.currentIndex].id,
+                      child:  QueryArtworkWidget(
+                            id: provider.itemlist[provider.player.currentIndex!].id,
                             type: ArtworkType.AUDIO,
                             artworkBorder: BorderRadius.circular(50),
                             artworkFit: BoxFit.cover,
                             artworkQuality: FilterQuality.high,
-                          );
-                        },
+                          
+                        
                       )),
                 ),
               ),
@@ -84,29 +81,29 @@ class Nowplaying extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                       child: SizedBox(
                         height: MediaQuery.of(context).size.height * 0.1,
-                        child: Consumer<NowplayProvider>(
-                          builder: (context, value, child) {
-                            return Marquee(
-                              text: value
-                                  .itemlist[value.player.currentIndex!].title
-                                  .replaceAll(RegExp('_'), '')
-                                  .replaceAll(RegExp('-'), ''),
-                              style: const TextStyle(color: Colors.white),
-                              velocity: 50,
-                              pauseAfterRound: const Duration(seconds: 4),
-                            );
-                          },
-                        ),
+                        // child: Consumer<NowplayProvider>(
+                        //   builder: (context, value, child) {
+                        //     return Marquee(
+                        //       text: value
+                        //           .itemlist[value.player.currentIndex!].title
+                        //           .replaceAll(RegExp('_'), '')
+                        //           .replaceAll(RegExp('-'), ''),
+                        //       style: const TextStyle(color: Colors.white),
+                        //       velocity: 50,
+                        //       pauseAfterRound: const Duration(seconds: 4),
+                        //     );
+                         // },
+                        //),
                       ),
                     ),
-                    Consumer<NowplayProvider>(builder: (context, value, child) {
-                      return Text(
-                        value.itemlist[value.player.currentIndex!].artist ??
-                            'Unknown',
-                        style: const TextStyle(
-                            overflow: TextOverflow.ellipsis, color: Colors.white),
-                      );
-                    }),
+                    // Consumer<NowplayProvider>(builder: (context, value, child) {
+                    //   return Text(
+                    //     value.itemlist[value.player.currentIndex!].artist ??
+                    //         'Unknown',
+                    //     style: const TextStyle(
+                    //         overflow: TextOverflow.ellipsis, color: Colors.white),
+                    //   );
+                    // }),
                   ],
                 ),
               ),

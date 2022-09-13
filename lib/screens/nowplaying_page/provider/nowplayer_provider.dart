@@ -21,7 +21,6 @@ class NowplayProvider with ChangeNotifier {
   _updateCurrentPlayingSongDetailes(index)  {
     if (player.currentIndex != null) {
       currentIndex = index;
-      notifyListeners();
       generatPallet(player.currentIndex!);
     }
   }
@@ -39,6 +38,7 @@ class NowplayProvider with ChangeNotifier {
   updatesonglist(List<SongModel> songs) {
     itemlist.clear();
     itemlist.addAll(songs);
+    notifyListeners();
   }
 
   //====================update currend index======================//

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:musica_app/screens/home_page/view/home_page.dart';
 import 'package:musica_app/screens/loby_page/view/home_main.dart';
 import 'package:musica_app/screens/miniplayer/view/miniplayer.dart';
 import 'package:musica_app/screens/nowplaying_page/view/now_playing.dart';
@@ -7,7 +6,6 @@ import 'package:we_slide/we_slide.dart';
 
 class MyWidget extends StatelessWidget {
   const MyWidget({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
      const double _panelMinSize = 70.0;

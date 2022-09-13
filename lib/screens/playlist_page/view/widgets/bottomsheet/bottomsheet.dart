@@ -17,10 +17,10 @@ class Bottomsheet extends StatelessWidget {
         context: context,
         builder: (ctx) {
           return AlertDialog(
-            backgroundColor: const Color.fromARGB(255, 80, 39, 52),
+            backgroundColor:Colors.white,
             title: const Text(
               'Delete song ?',
-              style: TextStyle(color: Color.fromARGB(255, 62, 221, 239)),
+              style: TextStyle(color: Colors.black),
             ),
             actions: [
               Row(
@@ -38,7 +38,7 @@ class Bottomsheet extends StatelessWidget {
                       onPressed: () {
                         Navigator.pop(context);
                         context
-                            .read<PlayListProvider>()
+                            .watch<PlayListProvider>()
                             .playlistsong[newindex!]
                             .dbsonglist
                             .removeAt(index);

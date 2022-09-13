@@ -31,7 +31,7 @@ class HomePage extends StatelessWidget {
             Colors.black,
           ])),
       child: FutureBuilder<List<SongModel>>(
-          future: context.read<HomeProvider>().audioQuery.querySongs(
+          future: context.watch<HomeProvider>().audioQuery.querySongs(
               sortType: SongSortType.ALBUM,
               orderType: OrderType.ASC_OR_SMALLER,
               uriType: UriType.EXTERNAL,
@@ -46,7 +46,7 @@ class HomePage extends StatelessWidget {
                 ),
               );
             }
-            //======no song found =========//
+      //=================no=song=found===============//
             if (snapshot.data!.isEmpty) {
               return const Center(
                   child: Text(
@@ -95,6 +95,7 @@ class HomePage extends StatelessWidget {
                               );
                               read.updatesonglist(snapshot.data!);
                               read.player.play();
+                              
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (ctx) => const Nowplaying()));
                             },
